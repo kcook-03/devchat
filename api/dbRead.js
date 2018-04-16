@@ -1,7 +1,9 @@
-var User = require('/models/user.js');
-var logger = require('/endpoints/logger.js');
+var User = require('.models/user.js');
 
-var readUser = function(data, select, callback) {
-    return User.findOne(data, select, function(err, docs))
-
+var findUser = function(data, select, callback) {
+    return User.findOne(data, select, function(err, docs) {
+        if(err) {
+            
+        }
+    })
 }
