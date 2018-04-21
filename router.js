@@ -4,7 +4,7 @@ module.exports = function(app) { //Pass the main server.js file into router.js
 
     //home page
     router.get('/', function(req, res) {
-        res.render('index.ejs');
+        res.render(__dirname + 'index.ejs');
         req.session.hello = "hello";
         console.log(req.session);
     });
