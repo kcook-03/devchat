@@ -1,10 +1,13 @@
 var User = require('/models/user.js');
-var logger = require('/endpoints/logger.js');
+var fs = require('fs');
 
 var delUser = function(data, callback) {
     User.remove(data, function(err) {
-        if (err) {
-            logger.error('Deletion Error');
+        if(err) {
+            fs.writeFile('../logs/log.txt', err, function(err){});
+        }
+        if(callback) {
+            callback(err);
         }
     });
 }
