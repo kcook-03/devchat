@@ -1,7 +1,7 @@
-var dbCreate = require('../api/dbCreate.js');
-var dbRead = require('../api/dbRead.js');
-var dbUpdate = require('../api/dbUpdate.js');
-var dbDelete = require('../api/dbDelete.js');
+var dbCreate = require('./core/dbCreate');
+var dbFind = require('./core/dbFind');
+var dbUpdate = require('./core/dbUpdate');
+var dbDelete = require('./core/dbDelete');
 var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     renderLogin: function(req, res) {
@@ -11,14 +11,12 @@ module.exports = {
         var user = await dbFind.findUser({'username': req.body.username.trim(), 'password': req.body.password.trim()});
         if(user) {
             req.session.userId = user.username;
-
             if(user.dev) {
                 res.redirect('/devhome');
             }
             else {
                 res.redirect('/clients' + req.session.user);
             }
-
         }
         else {
             req.session.err = ['Incorrect credentials'];
