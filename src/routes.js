@@ -1,6 +1,7 @@
 var router = require("express").Router();
 var home = require('./endpoints/home');
 var auth = require('./endpoints/auth');
+var ep = require('./util/ep-utils');
 module.exports = function(app) { //Pass the main server.js file into router.js
     app.use('/', router)
     //home page
