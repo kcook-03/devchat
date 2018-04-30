@@ -1,4 +1,4 @@
-var User = require('/models/user.js');
+var User = require('../models/user.js');
 var fs = require('fs');
 var findUser = function (data, select, callback) {
     return User.findOne(data, select, function(err,docs) {

@@ -1,4 +1,4 @@
-var User = require('/models/user.js');
+var User = require('../models/user.js');
 var fs = require('fs');
 
 var updateUser = function(data, update, conditions, callback) {

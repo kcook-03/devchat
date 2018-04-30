@@ -1,7 +1,7 @@
-var dbCreate = require('./core/dbCreate');
-var dbFind = require('./core/dbFind');
-var dbUpdate = require('./core/dbUpdate');
-var dbDelete = require('./core/dbDelete');
+var dbCreate = require('../core/dbCreate');
+var dbFind = require('../core/dbFind');
+var dbUpdate = require('../core/dbUpdate');
+var dbDelete = require('../core/dbDelete');
 var ObjectId = require('mongodb').ObjectID;
 module.exports = {
     renderLogin: function(req, res) {
