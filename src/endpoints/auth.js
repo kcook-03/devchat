@@ -9,18 +9,12 @@ module.exports = {
     },
     login: async function(req, res) {
         var user = await dbFind.findUser({'username': req.body.username.trim(), 'password': req.body.password.trim()});
-        if(user) {
+        if(user){
             req.session.userId = user.username;
-            if(user.dev) {
-                res.redirect('/devhome');
-            }
-            else {
-                res.redirect('/clients' + req.session.user);
-            }
-        }
-        else {
+            res.redirect('/home')
+        }else{
             req.session.err = ['Incorrect credentials'];
-            res.redirect('/login');
+            res.redirect('/login')
         }
     },
     renderSignup: function(req, res) {
