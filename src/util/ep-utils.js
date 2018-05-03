@@ -25,11 +25,7 @@ module.exports = {
     //Check if user is not logged in
     checkUser: function(req,res,next){
         if(req.session.userId){
-            if(req.session.dev){
-                res.redirect('/devs/' + req.session.user)
-            }else{
-                res.redirect('/clients/' + req.session.user)
-            }
+            res.redirect('/home')
         }else{
             next()
         }

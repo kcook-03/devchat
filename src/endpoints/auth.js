@@ -10,7 +10,9 @@ module.exports = {
     login: async function(req, res) {
         var user = await dbFind.findUser({'username': req.body.username.trim(), 'password': req.body.password.trim()});
         if(user){
-            req.session.userId = user.username;
+            req.session.userId = user._id;
+            req.session.user = user.username;
+            req.session.dev = user.dev;
             res.redirect('/home')
         }else{
             req.session.err = ['Incorrect credentials'];
