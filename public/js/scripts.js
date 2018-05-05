@@ -1,3 +1,4 @@
+
 function opendiv(value, d){
     var div = document.getElementById(value);
     if(div.style.display == "block"){
@@ -67,54 +68,4 @@ function amalg(cls, cls2, id){
 function styleAtt(attribute, value){
     this.style[attribute] = value
 }
-var ajax = {
-    GET: function(req, cb){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200) {
-               if(cb){
-                   var self = this;
-                   cb(req, self)
-               }
-            }
-        }
-        xhttp.open('GET', req, true);
-        xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-        xhttp.send()
-    },
-    POST: function(req){
-        var xhttp = new XMLHttpRequest();
-        xhttp.onreadystatechange = function(){
-            if(this.readyState == 4 && this.status == 200) {
-               if(cb){
-                   var self = this;
-                   cb(req, self)
-               }
-            }
-        }
-        xhttp.open('POST', req, true);
-        xhttp.setRequestHeader('X-Requested-With', 'XMLHttpRequest')
-        xhttp.send()
-    }
-}
-window.onload = function(){
-    document.getElementById('search').addEventListener('keyup', function(){ajax.GET('/?search=' + this.value, function(req, self){
-        var container = document.getElementById('cont');
-        var res = self.response;
-        if(req.split('=')[1] && req.split('=')[1] != 'undefined'){
-            var html = '';
-            res = JSON.parse(res);
-            for(let i = 0; i < res.length; i++){
-                var end = res[i].document.description.split(' ').length < 10 ? '' : '...';
-                html += 
-                `<a href="/websites/${res[i].document._id}" class="shade result">
-                    <h2>${res[i].document.name}</h2>
-                    <p>${res[i].document.description.split(' ').slice(0, 10).join(' ')} ${end}</p>
-                </a>`
-            }
-            container.innerHTML = html;
-        }else{
-            container.innerHTML = null;
-        }
-    })})
-}
+

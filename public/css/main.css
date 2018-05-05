@@ -88,7 +88,7 @@ a {
     right:0;
     width: 100vw;
     height: 12vh;
-    background-color: whitesmoke;
+    background-color: #F0F0F0;
     z-index: 1;
 }
 .navbar li, .link {
@@ -152,7 +152,6 @@ a.navlink, button.navlink {
     background-color: darkslategrey;
 }
 input[type="text"], input[type="number"], input[type="password"] {
-    border-style: hidden;
     border-color: transparent;
     border-bottom-style: solid;
     border-color: lightgrey;
@@ -419,4 +418,53 @@ hr {
     border-radius: 5px;
     font-size: 2.2vh;
     margin-bottom: 0.7vh;
+}
+.chat {
+    border-style: solid;
+    border-width: 3px;
+    border-color: transparent;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 87%;
+    width: 23vw;
+    background-color: #F9F9F9;
+}
+.chat-send {
+    position: absolute;
+    bottom: 0;
+    width: 19vw !important;
+    height: 7vh;
+    font-size: 3vh; 
+    border-style: hidden;
+    background-color: white !important;
+    text-align: left !important;
+    padding: 1vh 2vw;
+}
+.psentMessage {
+    align-self: flex-end;
+    text-align: right !important;
+    background-color: #F0F0F0;
+    border-top-right-radius: 0 !important;
+}
+.pmessage {
+    text-align: left !important;
+    background-color: white;
+    border-top-left-radius: 0 !important;
+}
+.pmessage, .psentMessage {
+    padding: 2vh 1vw;
+    max-width: 85%;
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+    border-style: hidden;
+    border-radius: 10px;
+}
+.chatList {
+    display: flex !important;
+    height: 80vh;
+    padding: 0.5vh 1vw;
+    flex-direction: column;
+    align-items: flex-start;
+    overflow-y: scroll;
 }
