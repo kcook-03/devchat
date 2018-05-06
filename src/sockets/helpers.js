@@ -4,7 +4,7 @@ module.exports = {
         for(let i = 0; i < users.length; i++){
             if(users[i].server.readyState == ws.OPEN){
                 if(callback){
-                    return callback(data, users[i])
+                    callback(data, users[i])
                 }else{
                     users[i].server.send(data)
                 }

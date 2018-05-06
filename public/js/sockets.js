@@ -1,4 +1,21 @@
 var ws = new WebSocket('ws://localhost:8080');
+window.onload = function(){
+    var chat = document.getElementsByClassName('chatList')[0];
+    chat.scrollTop = chat.offsetHeight + 1000;
+}
+function updateTime(){
+    var times = document.getElementsByClassName('timeAgo');
+    var dates = document.getElementsByClassName('dateAgo');
+    for(let i = 0; i < times.length; i++){
+        var time = timeAgo(parseInt(dates[i].value));
+        if(time == '0s'){
+            time = 'now'
+        }
+        times[i].innerHTML = time;
+    }
+}
+var upd = updateTime();
+var t = setInterval(updateTime, 10000);
 function message(e){
     if(e.keyCode == 13){
         msg()
@@ -31,14 +48,19 @@ function timeAgo(date){
   if(interval > 1) return interval + 'm';
   return Math.floor(seconds) + 's';
 }
-ws.addEventListener('open',  function(){})
 ws.addEventListener('message', function(msg){
     var chat = document.getElementsByClassName('chatList')[0];
-    var session = document.getElementById('session').value;
+    var chatCont = document.getElementsByClassName('chat')[0];
+    var session = JSON.parse(document.getElementById('session').value);
     var data = JSON.parse(msg.data);
     var clss = 'message';
-    if(session.user == msg.author){
+    console.log(session.user)
+    console.log(data.author)
+    if(session.user.toString().trim() == data.author.toString().trim()){
         clss = 'sentMessage';
+        data.author = 'you'
     }
-    chat.innerHTML += `<p class="p${clss}">${data.message}<span class="timestamp">${data.author} | ${timeAgo(data.madeAt)}</span><p>`
+    var htmlMsg = `<p class="p${clss} inline">${data.message}<span class="timestamp">${data.author} | <input type="hidden" class="dateAgo" value="${data.madeAt}"><span class="timeAgo">now</span></span></p>`
+    chat.innerHTML += htmlMsg;
+    chat.scrollTop = chat.offsetHeight + 1000;
 })

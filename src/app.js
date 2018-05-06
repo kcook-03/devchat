@@ -58,17 +58,13 @@ server.on('upgrade', function(req,socket,head){
     })
 });
 var connections = [];
-wss.on('connection', function(connection){
-    var cookies = cookie.parse(connection.req.headers.cookie);
+wss.on('connection', function connection(conn){
+    var cookies = cookie.parse(conn.req.headers.cookie);
     var sid = cookieParser.signedCookie(cookies['connect.sid'], 'yVVma9ga');
     var requestSession = JSON.parse(store.returnSession(sid));
-    var index = connections.push({server:connection.server, username:requestSession.name, id:requestSession.chatId}) - 1;
-    sockets.open(connections, index, {message:'online', author:requestSession.user, madeAt:Date.now()})
-    connection.server.on('message', function(msg){
+    var index = connections.push({server:conn.server, username:requestSession.user, id:requestSession.chatId}) - 1;
+    conn.server.on('message', function(msg){
         sockets.message(connections, index, {message:msg, author:requestSession.user, madeAt:Date.now()})
-    });
-    connection.server.on('close', function(msg){
-        sockets.close(connections, index, {message:msg, author:requestSession.user, madeAt:Date.now()})
     })
 });
 routes(app)

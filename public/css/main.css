@@ -88,7 +88,6 @@ a {
     right:0;
     width: 100vw;
     height: 12vh;
-    background-color: #F0F0F0;
     z-index: 1;
 }
 .navbar li, .link {
@@ -420,20 +419,12 @@ hr {
     margin-bottom: 0.7vh;
 }
 .chat {
-    border-style: solid;
-    border-width: 3px;
-    border-color: transparent;
-    position: fixed;
-    bottom: 0;
     left: 0;
-    height: 87%;
-    width: 23vw;
-    background-color: #F9F9F9;
 }
 .chat-send {
     position: absolute;
     bottom: 0;
-    width: 19vw !important;
+    width: 23vw !important;
     height: 7vh;
     font-size: 3vh; 
     border-style: hidden;
@@ -452,6 +443,9 @@ hr {
     background-color: white;
     border-top-left-radius: 0 !important;
 }
+.pmessage * {
+    text-align: left !important;
+}
 .pmessage, .psentMessage {
     padding: 2vh 1vw;
     max-width: 85%;
@@ -466,5 +460,41 @@ hr {
     padding: 0.5vh 1vw;
     flex-direction: column;
     align-items: flex-start;
-    overflow-y: scroll;
+}
+.stats {
+    right: 0;
+}
+.stats, .chat {
+    border-style: hidden;
+    border-width: 3px;
+    border-color: transparent;
+    position: fixed;
+    bottom: 0;
+    height: 87%;
+    width: 27vw;
+    background-color: #F9F9F9;
+}
+.projectHeader {
+    background-color: #F9F9F9;
+    position: fixed;
+    height: 87%;
+    width: 46vw;
+    left: 27vw;
+    right: 27vw; 
+}
+.taskList {
+    position: fixed;
+    top: 42vh;
+    width: 46vw;
+}
+.taskList, .chatList {
+    overflow-y: auto;
+}
+.margins {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
+}
+.margins * {
+    margin-top: 1vh;
+    margin-bottom: 1vh;
 }

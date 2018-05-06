@@ -13,6 +13,7 @@ module.exports = {
             req.session.userId = user._id;
             req.session.user = user.username;
             req.session.dev = user.dev;
+            req.session.gravatar = user.gravatar;
             res.redirect('/home')
         }else{
             req.session.err = ['Incorrect credentials'];

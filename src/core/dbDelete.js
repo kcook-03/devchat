@@ -1,6 +1,7 @@
 var Website = require('../models/websites');
 var User = require('../models/users');
 var Job = require('../models/jobs');
+var Task = require('../models/tasks');
 var fs = require('fs');
 var delUser = function(data, callback){
     User.remove(data, function(err){
@@ -32,8 +33,19 @@ var delJob = function(data, callback){
         }
     })
 }
+var delTask = function(data, callback){
+    Task.remove(data, function(err){
+        if(err){
+            fs.writeFile('../../logs/db.json', err, function(err){})
+        }
+        if(callback){
+            callback(err)
+        }
+    })
+}
 module.exports = {
     delUser: delUser,
     delWebsite: delWebsite,
-    delJob: delJob
+    delJob: delJob,
+    delTask: delTask
 }

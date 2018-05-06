@@ -1,6 +1,7 @@
 var Website = require('../models/websites');
 var User = require('../models/users');
 var Job = require('../models/jobs');
+var Task = require('../models/tasks');
 var fs = require('fs');
 var findUser = function (data, select, callback){
     return User.findOne(data, select, function(err,docs){
@@ -24,6 +25,16 @@ var findSite = function(data, select, callback){
 }
 var findJob = function(data, select, callback){
     return Job.findOne(data, select, function(err,docs){
+        if(err){
+            fs.writeFile('../../logs/db.json', err, function(err){})
+        }
+        if(callback){
+            callback(err,docs)
+        }
+    })
+}
+var findTask = function(data, select, callback){
+    return Task.findOne(data, select, function(err,docs){
         if(err){
             fs.writeFile('../../logs/db.json', err, function(err){})
         }
@@ -62,11 +73,23 @@ searchJobs = function(data, select, callback){
         }
     })
 }
+searchTasks = function(data, select, callback){
+    return Task.find(data, select, function(err,docs){
+        if(err){
+            fs.writeFile('../../logs/db.json', err, function(err){})
+        }
+        if(callback){
+            callback(err,docs)
+        }
+    })
+}
 module.exports = {
     searchSites: searchSites,
     searchUsers: searchUsers,
     findJob: findJob,
     searchJobs: searchJobs,
     findSite: findSite,
-    findUser: findUser
+    findUser: findUser,
+    findTask: findTask,
+    searchTasks: searchTasks
 }

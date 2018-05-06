@@ -2,14 +2,44 @@
 <%include partials/othercenter%>
 <script src="../js/sockets.js"></script>
 <%if(website){%>
-    <h1><%=website.name%></h1>
-    <h2><%=website.author%></h2>
-    <%for(let i = 0; i < jobs.length; i++){%>
-        <p><%=jobs[i].name%></p>
-        <%if(jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)]){%>
-            <p><%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%></p>
+    <div class="projectHeader">
+        <h1><%=website.name%></h1>
+        <h2><%=website.author%></h2>
+        <hr>
+        <%if(session.user == website.author){%>
+            <a href="/tasks/add<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
         <%}%>
-    <%}%>
+        <div class="taskList">
+            <%if(tasks.length === 0){%>
+                <p style="color:grey">No tasks yet</p>
+            <%}else{%>
+                <% for(let i = 0; i < tasks.length; i++){%>
+                    <div class="task">
+                        <%=tasks[i]%>
+                    </div>
+                <%}%>
+            <%}%>
+        </div>
+    </div>
+    <div class="stats">
+        <h2>Members</h2>
+        <div class="inline margins">
+            <p>Author</p>
+            <a href="http://localhost:3000/clients/<%=website.author%>">
+                <%=website.author%>
+            </a>
+        </div>
+        <%for(let i = 0; i < jobs.length; i++){%>
+            <div class="inline margins">
+                <p>
+                    <%=jobs[i].name%>
+                </p> | 
+                <%if(jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)]){%>
+                    <a href="http://localhost:3000/devs/<%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%>"><%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%></a>
+                <%}%>
+            </div>
+        <%}%>
+    </div>
     <div class="chat">
         <div class="chatList">
             <%if(website.chats){%>
@@ -18,13 +48,27 @@
                     <%if(website.chats[i].author == session.user){%>
                         <%clss = 'sentMessage'%>
                     <%}%>
-                    <p class="p<%=clss%>"><%=website.chats[i].message%><span class="timestamp"><%=website.chats[i].author%> | <%=website.chats[i].madeAt.timeAgo()%></span></p>
+                    <p class="p<%=clss%> inline">
+                        <%=website.chats[i].message%>
+                        <span class="timestamp">
+                            <%if(session.user == website.chats[i].author){%>
+                                You
+                            <%}else{%>
+                                <%=website.chats[i].author%>
+                            <%}%>
+                             | 
+                            <input type="hidden" class="dateAgo" value="<%=website.chats[i].madeAt.getTime()%>">
+                            <span class="timeAgo">
+                                <%=website.chats[i].madeAt.timeAgo()%>
+                            </span>
+                        </span>
+                    </p>
                 <%}%>
             <%}else{%>
                 <p>Sorry, no messages</p>
             <%}%>
         </div>
-        <input type="hidden" value="<%=session%>" id="session">
+        <input type="hidden" value="<%=JSON.stringify(session)%>" id="session">
         <input type="text" class="chat-send" placeholder="Chat" onkeyup="message(event)">
     </div>
 <%}else{%>
