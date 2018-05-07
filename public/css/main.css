@@ -490,7 +490,7 @@ hr {
     position: fixed;
     top: 42vh;
     width: 46vw;
-    height: 100vh;
+    height: 55vh;
     overflow-y: auto;
 }
 .taskList, .chatList {
