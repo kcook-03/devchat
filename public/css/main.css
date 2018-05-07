@@ -420,6 +420,8 @@ hr {
 }
 .chat {
     left: 0;
+    border-right-style: solid !important;
+    border-right-color: whitesmoke !important;
 }
 .chat-send {
     position: absolute;
@@ -463,6 +465,8 @@ hr {
 }
 .stats {
     right: 0;
+    border-left-style: solid !important;
+    border-left-color: whitesmoke !important;
 }
 .stats, .chat {
     border-style: hidden;
@@ -486,6 +490,8 @@ hr {
     position: fixed;
     top: 42vh;
     width: 46vw;
+    height: 100vh;
+    overflow-y: auto;
 }
 .taskList, .chatList {
     overflow-y: auto;
@@ -497,4 +503,38 @@ hr {
 .margins * {
     margin-top: 1vh;
     margin-bottom: 1vh;
+}
+.chart {
+    position: relative;
+    height: 33vh;
+    width: 33vh;
+    margin-left: auto;
+    margin-right: auto;
+}
+.chart-text {
+font-size: 2vh;
+  -moz-transform: translateY(0.47vh);
+  -ms-transform: translateY(0.47vh);
+  -webkit-transform: translateY(0.47vh);
+  transform: translateY(0.47vh);
+}
+
+.chart-number {
+  font-size: 0.6em;
+  line-height: 1;
+  text-anchor: middle;
+  -moz-transform: translateY(-0.25em);
+  -ms-transform: translateY(-0.25em);
+  -webkit-transform: translateY(-0.25em);
+  transform: translateY(-0.25em);
+}
+
+.chart-label {
+  font-size: 0.2em;
+  text-transform: uppercase;
+  text-anchor: middle;
+  -moz-transform: translateY(0.7em);
+  -ms-transform: translateY(0.7em);
+  -webkit-transform: translateY(0.7em);
+  transform: translateY(0.7em);
 }

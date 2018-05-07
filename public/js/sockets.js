@@ -35,17 +35,17 @@ function send(data){
     }
 }
 function timeAgo(date){
-  var seconds = Math.floor((new Date() - date) / 1000);
-  var interval = Math.floor(seconds / 31536000);
-  if(interval > 1) return interval + ' years';
+  var seconds = ((new Date() - date) / 1000);
+  var interval = (seconds / 31536000);
+  if(interval > 1) return Math.floor(interval) + ' years';
   interval = Math.floor(seconds / 2592000);
-  if(interval > 1) return interval + ' months';
-  interval = Math.floor(seconds / 86400);
-  if(interval > 1) return interval + 'd';
-  interval = Math.floor(seconds / 3600);
-  if(interval > 1) return interval + 'h';
-  interval = Math.floor(seconds / 60);
-  if(interval > 1) return interval + 'm';
+  if(interval > 1) return Math.floor(interval) + ' months';
+  interval = (seconds / 86400);
+  if(interval > 1) return Math.floor(interval) + 'd';
+  interval = (seconds / 3600);
+  if(interval > 1) return Math.floor(interval) + 'h';
+  interval = (seconds / 60);
+  if(interval > 1) return Math.floor(interval) + 'm';
   return Math.floor(seconds) + 's';
 }
 ws.addEventListener('message', function(msg){
@@ -54,8 +54,6 @@ ws.addEventListener('message', function(msg){
     var session = JSON.parse(document.getElementById('session').value);
     var data = JSON.parse(msg.data);
     var clss = 'message';
-    console.log(session.user)
-    console.log(data.author)
     if(session.user.toString().trim() == data.author.toString().trim()){
         clss = 'sentMessage';
         data.author = 'you'

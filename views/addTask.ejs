@@ -1,6 +1,23 @@
-<%partials/header%>
-<%partials/center%>
+<%include partials/header%>
+<%include partials/center%>
 <div class="box">
-    
+    <h1 class="subtitle">Create a task</h1>
+    <hr>
+    <form action="/websites/create" method="post" id="form" onsubmit="amalg('jobName', 'numName', 'jobData')">
+        <div class="inline">
+            <div style="display:block">
+                <input type="text" name="website" placeholder="Task name" autocomplete="off" class="titleUpd">
+                <textarea name="description" placeholder="Additional notes" class="textarea" style="width:36vw;"></textarea>
+            </div>
+            <div style="display:block">
+            </div>
+        </div>
+        <button class="submit" type="button" onclick="multiExec(createDiv(jobName, 'jobs'), createDiv(numName, 'jobs'), createDiv(close, 'jobs'))">Add SubTask</button>
+        <div id="jobs">
+        </div>
+        <input type="hidden" style="display:none;" id="jobData" name="jobData">
+        <input type="submit" value="Create" class="submit cta lg">
+    </form>
+    <% include partials/error%>
 </div>
-<%partials/footer%>
+<%include partials/footer%>
