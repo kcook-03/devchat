@@ -6,7 +6,7 @@ module.exports = {
         var sameConnections = connections.filter(function(conn){
             return conn.username == data.author
         });
-        if(sameConnections.length > 2){
+        if(sameConnections.length < 2){
             helpers.broadcast(JSON.stringify(data), connections, function(msg, user){
                 if(user.id.toString().trim() == connections[index].id.toString().trim()){
                     user.server.send(msg)
