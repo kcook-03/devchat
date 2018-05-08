@@ -3,19 +3,24 @@
 <div class="box">
     <h1 class="subtitle">Create a task</h1>
     <hr>
-    <form action="/websites/create" method="post" id="form" onsubmit="amalg('jobName', 'numName', 'jobData')">
+    <form action="/websites/create" method="post" id="form" onsubmit="amalg('taskName', 'taskDesc', 'taskData')">
         <div class="inline">
-            <div style="display:block">
-                <input type="text" name="website" placeholder="Task name" autocomplete="off" class="titleUpd">
-                <textarea name="description" placeholder="Additional notes" class="textarea" style="width:36vw;"></textarea>
+            <div>
+                <input type="text" name="website" placeholder="Task name" autocomplete="off" class="titleUpd" style="display:block">
+                <textarea name="description" placeholder="Additional notes" class="textarea" style="width:17vw" style="display:block"></textarea>
             </div>
-            <div style="display:block">
+            <div>
+                <div class="members textarea" style="display:block;width:17vw;height:33.5vh;overflow-y:auto;">
+                    <%for(let i = 0; i < website.members.length; i++){%>
+                        <%=website.members[i].name%> | <%=website.members[i].job%>
+                    <%}%>
+                </div>              
             </div>
         </div>
-        <button class="submit" type="button" onclick="multiExec(createDiv(jobName, 'jobs'), createDiv(numName, 'jobs'), createDiv(close, 'jobs'))">Add SubTask</button>
-        <div id="jobs">
+        <button class="submit" type="button" onclick="multiExec(createDiv(taskName, 'subTasks'), createDiv(taskDesc, 'subTasks'), createDiv(close, 'subTasks'))">Add SubTask</button>
+        <div id="subTasks">
         </div>
-        <input type="hidden" style="display:none;" id="jobData" name="jobData">
+        <input type="hidden" style="display:none;" id="taskData" name="taskData">
         <input type="submit" value="Create" class="submit cta lg">
     </form>
     <% include partials/error%>

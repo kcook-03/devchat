@@ -39,6 +39,18 @@ var numName = {
     placeholder: "Payment (USD)",
     class: "titleUpd numName"
 }
+var taskName = {
+    elemType: "input",
+    type: "text",
+    placeholder: "Task name",
+    class: "titleUpd taskName", 
+} 
+var taskDesc = {
+    elemType: "input",
+    type: "text",
+    placeholder: "Description",
+    class: "titleUpd taskDesc"
+}
 function createDiv(atts, prnt){
     var elem = document.createElement(atts.elemType);
     for(key in atts){

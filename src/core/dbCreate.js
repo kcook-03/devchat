@@ -3,38 +3,14 @@ var User = require('../models/users');
 var Job = require('../models/jobs');
 var Task = require('../models/tasks');
 var fs = require('fs');
-var newUser = function(data, callback){
-    User.create(data, function(err, saved){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err, saved)
-        }
-    })
+var models = {
+    User: User,
+    Website: Website,
+    Job: Job,
+    Task: Task
 }
-var newWebsite = function(data, callback){
-    Website.create(data, function(err,saved){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err,saved)
-        }
-    })
-}
-var newJob = function(data, callback){
-    Job.create(data, function(err,saved){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err,saved)
-        }
-    })
-}
-var newTask = function(data, callback){
-    Task.create(data, function(err,saved){
+var create = function(model, data, callback){
+    models[model].create(data, function(err, saved){
         if(err){
             fs.writeFile('../../logs/db.json', err, function(err){})
         }
@@ -44,8 +20,5 @@ var newTask = function(data, callback){
     })
 }
 module.exports = {
-    newUser: newUser,
-    newWebsite: newWebsite,
-    newJob: newJob,
-    newTask: newTask
+    create:create
 }

@@ -3,38 +3,14 @@ var User = require('../models/users');
 var Job = require('../models/jobs');
 var Task = require('../models/tasks');
 var fs = require('fs');
-var delUser = function(data, callback){
-    User.remove(data, function(err){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err)
-        }
-    })
+var models = {
+    User: User,
+    Website: Website,
+    Job: Job,
+    Task: Task
 }
-var delWebsite = function(data, callback){
-    Website.remove(data, function(err){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err)
-        }
-    })
-}
-var delJob = function(data, callback){
-    Job.remove(data, function(err){
-        if(err){
-            fs.writeFile('../../logs/db.json', err, function(err){})
-        }
-        if(callback){
-            callback(err)
-        }
-    })
-}
-var delTask = function(data, callback){
-    Task.remove(data, function(err){
+var del = function(model, data, callback){
+    models[model].remove(data, function(err){
         if(err){
             fs.writeFile('../../logs/db.json', err, function(err){})
         }
@@ -44,8 +20,5 @@ var delTask = function(data, callback){
     })
 }
 module.exports = {
-    delUser: delUser,
-    delWebsite: delWebsite,
-    delJob: delJob,
-    delTask: delTask
+    del:del
 }
