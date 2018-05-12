@@ -150,7 +150,7 @@ a.navlink, button.navlink {
 .next:hover, .prev:hover {
     background-color: darkslategrey;
 }
-input[type="text"], input[type="number"], input[type="password"] {
+input[type="text"], input[type="number"], input[type="password"], p.titleUpd {
     border-color: transparent;
     border-bottom-style: solid;
     border-color: lightgrey;
@@ -170,7 +170,7 @@ input::placeholder, .textarea::placeholder {
 .description {
     width: 40vw;
 }
-input.titleUpd, textarea.titleUpd{
+input.titleUpd, textarea.titleUpd, p.titleUpd{
     width: 15vw;
     height: 7vh;
     text-align: center;
@@ -178,6 +178,14 @@ input.titleUpd, textarea.titleUpd{
     border-style: solid !important;
     text-align: left !important;
     padding: .2vh 2vw;
+    border-width: 2px;
+}
+p.titleUpd {
+    text-align: center !important;
+    line-height: 7vh;
+    border-right-color: transparent;
+    border-left-color: transparent;
+    border-top-color: transparent;
 }
 .submit {
     border-style: solid;
@@ -486,9 +494,11 @@ hr {
     left: 27vw;
     right: 27vw; 
 }
+h3 {
+    font-weight: normal;
+}
 .taskList {
-    position: fixed;
-    top: 42vh;
+    position: relative;
     width: 46vw;
     height: 55vh;
     overflow-y: auto;
@@ -537,4 +547,19 @@ font-size: 2vh;
   -ms-transform: translateY(0.7em);
   -webkit-transform: translateY(0.7em);
   transform: translateY(0.7em);
+}
+.task {
+    padding: 1vh 2vw;
+    margin: 1.5vh 1vw;
+    text-align:left;
+    width: 36vw;
+    background-color: #F5F5F5;
+    border-left-style: solid;
+    border-left-width: 3vw;
+}
+.task h2 {
+    margin: 1.5vh 0;
+}
+.chart-text {
+    font-size: 0.8vw;
 }

@@ -77,6 +77,16 @@ function amalg(cls, cls2, id){
     }
     input.value = JSON.stringify(jobs)
 }
+function amalg2(cls, cls2, id){
+    var array = document.getElementsByClassName(cls);
+    var array2 = document.getElementsByClassName(cls2);
+    var input = document.getElementById(id);
+    var jobs = [];
+    for(var i = 0; i < array.length; i++){
+        jobs.push({name:array[i].value, description:array2[i].value})
+    }
+    input.value = JSON.stringify(jobs)
+}
 function styleAtt(attribute, value){
     this.style[attribute] = value
 }

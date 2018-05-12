@@ -56,7 +56,7 @@ ws.addEventListener('message', function(msg){
     var clss = 'message';
     if(session.user.toString().trim() == data.author.toString().trim()){
         clss = 'sentMessage';
-        data.author = 'you'
+        data.author = 'You'
     }
     var htmlMsg = `<p class="p${clss} inline">${data.message}<span class="timestamp">${data.author} | <input type="hidden" class="dateAgo" value="${data.madeAt}"><span class="timeAgo">now</span></span></p>`
     chat.innerHTML += htmlMsg;

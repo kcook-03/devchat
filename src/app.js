@@ -13,6 +13,7 @@ var session = require('express-session');
 var store = new session.MemoryStore();
 var routes = require('./routes');
 var sockets = require('./sockets/sockets.js');
+var expressValidator = require('express-validator');
 app.use(helmet({frameguard: {action: 'deny'}}));
 mongoose.connect('mongodb://127.0.0.1:27017/condev');
 mongoose.connection.on('open', function(err) {
@@ -32,6 +33,22 @@ app.use(session({
     cookie: {httpOnly: true},
     store:store
 }));
+app.use(expressValidator({
+  errorFormatter: function(param, msg, value) {
+      var namespace = param.split('.')
+      , root    = namespace.shift()
+      , formParam = root;
+
+    while(namespace.length) {
+      formParam += '[' + namespace.shift() + ']';
+    }
+    return {
+      param : formParam,
+      msg   : msg,
+      value : value
+    }
+  }
+}));
 Date.prototype.timeAgo = function(){
   var seconds = ((new Date() - this) / 1000);
   var interval = (seconds / 31536000);
@@ -45,6 +62,11 @@ Date.prototype.timeAgo = function(){
   interval = (seconds / 60);
   if(interval > 1) return Math.floor(interval) + 'm';
   return Math.floor(seconds) + 's';
+}
+String.prototype.toTitle = function(){
+  var str = this.split('');
+  str[0] = str[0].toUpperCase();
+  return str.join('')
 }
 server.listen(process.env.PORT || 8080, function(err) {
   if(err){
