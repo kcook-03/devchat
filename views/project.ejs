@@ -7,7 +7,10 @@
         <h2 style="color:grey"><%=website.author%></h2>
         <hr style="border-color: whitesmoke; border-width:1.5px;">
         <%if(session.user == website.author){%>
-            <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+            <div class="inline">
+                <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+                <a href="/addTasks/<%=website._id%>" class=" lg submit" style="margin-right:auto;margin-left:auto">Finish Project</a>
+            </div>
         <%}%>
         <div class="taskList">
             <%if(tasks.length === 0){%>
@@ -58,7 +61,7 @@
                 <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#F9F9F9"></circle>
                 <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#F0F0F0" stroke-width="5"></circle>
                 <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#e57373" stroke-width="5" stroke-dasharray="<%=pctDone%> <%=100 - pctDone%>" stroke-dashoffset="25"></circle>
-                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ef9a9a" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="125 - <%=pctDone%>"></circle>
+                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ef9a9a" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="<%=125 - pctDone%>"></circle>
                 <g class="chart-text">
                     <text x="50%" y="52%" class="chart-label">
                         <%=Math.round(pctDone)%>% done
@@ -72,6 +75,12 @@
                 </g>
             </svg>
         </div>
+        <%if(session.user == website.author && !website.githubRepository){%>
+            <form method="post" action="/updProject/githubRepository/<%=website._id%>" class="inline">
+                <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                <input type="submit" value="Add" class="submit lg">
+            </form>
+        <%}%>
         <h2>Members</h2>
         <div class="members">
             <div class="inline margins">

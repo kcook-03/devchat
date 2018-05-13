@@ -1,5 +1,6 @@
 var dbFind = require('../core/dbFind');
 var ObjectID = require('mongodb').ObjectID;
+var dbUpdate = require('../core/dbUpdate');
 module.exports = {
     show: async function(req,res){
         var website = await dbFind.find('Website', {'_id':req.params.websiteId, 'closed':true});
@@ -15,5 +16,14 @@ module.exports = {
         }else{
             res.redirect('/home')
         }
+    },
+    update: function(req,res){
+        var websiteId = ObjectID(req.params.websiteId);
+        var attr = req.params.attr;
+        var formValue = req.body.formValue;
+        if(attr = 'githubRepository'){
+            dbUpdate.findOneAndUpdate('Website', {'_id':websiteId, 'author':req.session.user}, {'githubRepository':formValue})
+        }
+        res.redirect('/projects/' + req.params.websiteId)
     }
 }
