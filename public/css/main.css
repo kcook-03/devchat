@@ -24,6 +24,7 @@ html, body {
     background-color: whitesmoke;
     background-size: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 .content {
     padding: 10vh 2vw;
@@ -485,6 +486,7 @@ hr {
     height: 87%;
     width: 27vw;
     background-color: #F9F9F9;
+    overflow-y: auto;
 }
 .projectHeader {
     background-color: #F9F9F9;

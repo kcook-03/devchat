@@ -105,14 +105,12 @@
                     <%=website.author%>
                 </a>
             </div>
-            <%for(let i = 0; i < jobs.length; i++){%>
+            <%for(let i = 0; i < website.members.length; i++){%>
                 <div class="inline margins">
                     <p>
-                        <%=jobs[i].name%>
+                        <%=website.members[i].job%>
                     </p> | 
-                    <%if(jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)]){%>
-                        <a href="http://localhost:3000/devs/<%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%>"><%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%></a>
-                    <%}%>
+                    <a href="http://localhost:3000/devs/<%=website.members[i].name%>"><%=website.members[i].name%></a>
                 </div>
             <%}%>
         </div>
