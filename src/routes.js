@@ -9,6 +9,7 @@ module.exports = function(app) { //Pass the main server.js file into router.js
     app.use('/', router);
     router.get('/projects/:websiteId', projects.show);
     router.post('/updProject/:attr/:websiteId', projects.update);
+    router.post('/finishProject/:websiteId', projects.finish);
     router.get('/', home.index);
     router.get('/login', ep.notEmpty('/login'), ep.checkUser, auth.renderLogin);
     router.post('/login', auth.login);

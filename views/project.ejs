@@ -1,4 +1,4 @@
-<%include partials/otherheader%>
+<%include partials/header%>
 <%include partials/othercenter%>
 <script src="../js/sockets.js"></script>
 <%if(website){%>
@@ -8,8 +8,14 @@
         <hr style="border-color: whitesmoke; border-width:1.5px;">
         <%if(session.user == website.author){%>
             <div class="inline">
-                <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
-                <a href="/addTasks/<%=website._id%>" class=" lg submit" style="margin-right:auto;margin-left:auto">Finish Project</a>
+                <%if(!website.done){%>
+                    <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+                    <form action="/finishProject/<%=website._id%>" method="post" style="vertical-align:top">
+                        <input type="submit"value="Finish Project"class=" lg submit" style="margin-right:auto;margin-left:auto">
+                    </form>
+                <%}else{%>
+                    <p>Website is done</p>
+                <%}%>
             </div>
         <%}%>
         <div class="taskList">
@@ -75,6 +81,16 @@
                 </g>
             </svg>
         </div>
+        <%if(session.user == website.author && website.githubRepository){%>
+            <p class="inline">
+                <a class="github" href="<%=website.githubRepository%>"><%=website.githubRepository%></a>
+                <i class="material-icons" style="cursor:pointer;" onclick="opendiv('gh')">edit</i>
+                <form action="/updProject/githubRepository/<%=website._id%>" method="post" id="gh" style="display:none" class="inline">
+                    <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                    <input type="submit" value="Add" class="submit lg">                
+                </form>
+            </p>
+        <%}%>
         <%if(session.user == website.author && !website.githubRepository){%>
             <form method="post" action="/updProject/githubRepository/<%=website._id%>" class="inline">
                 <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
@@ -130,7 +146,9 @@
             <%}%>
         </div>
         <input type="hidden" value="<%=JSON.stringify(session)%>" id="session">
-        <input type="text" class="chat-send" placeholder="Chat" onkeyup="message(event)">
+        <%if(!website.done){%>
+            <input type="text" class="chat-send" placeholder="Chat" onkeyup="message(event)">
+        <%}%>
     </div>
 <%}else{%>
     <h1>Sorry, no website here</h1>

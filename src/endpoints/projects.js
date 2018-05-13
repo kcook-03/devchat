@@ -25,5 +25,22 @@ module.exports = {
             dbUpdate.findOneAndUpdate('Website', {'_id':websiteId, 'author':req.session.user}, {'githubRepository':formValue})
         }
         res.redirect('/projects/' + req.params.websiteId)
+    },
+    finish: async function(req,res){
+        var websiteId = ObjectID(req.params.websiteId);
+        var tasks = await dbFind.search('Task', {'websiteId':websiteId, 'author':req.session.user});
+        if(tasks){
+            if(tasks.filter(function(task){return task.done == true}).length == tasks.length){
+                dbUpdate.findOneAndUpdate('Website', {'_id':websiteId, 'author':req.session.user}, {'done':true}, function(err, doc){
+                    if(doc && !err && !doc.done){
+                        for(let i = 0; i < doc.members.length; i++){
+                            dbUpdate.update('User', {'username':doc.members[i].name}, {$inc:{'xp':20}})
+                        }
+                        dbUpdate.update('User', {'username':req.session.user}, {$inc:{'xp':20}})
+                    }
+                })
+            }
+        }
+        res.redirect('/projects/' + req.params.websiteId)
     }
 }
