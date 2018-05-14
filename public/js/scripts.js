@@ -46,10 +46,11 @@ var taskName = {
     class: "titleUpd taskName", 
 } 
 var taskDesc = {
-    elemType: "input",
+    elemType: "textarea",
     type: "text",
     placeholder: "Description",
-    class: "titleUpd taskDesc"
+    class: "textarea titleUpd taskDesc",
+    style: "height:20vh"
 }
 function createDiv(atts, prnt){
     var elem = document.createElement(atts.elemType);

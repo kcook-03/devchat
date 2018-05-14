@@ -1,4 +1,4 @@
-<%include partials/otherheader%>
+<%include partials/header%>
 <%include partials/othercenter%>
 <script src="../js/sockets.js"></script>
 <%if(website){%>
@@ -7,7 +7,16 @@
         <h2 style="color:grey"><%=website.author%></h2>
         <hr style="border-color: whitesmoke; border-width:1.5px;">
         <%if(session.user == website.author){%>
-            <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+            <div class="inline">
+                <%if(!website.done){%>
+                    <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+                    <form action="/finishProject/<%=website._id%>" method="post" style="vertical-align:top">
+                        <input type="submit"value="Finish Project"class=" lg submit" style="margin-right:auto;margin-left:auto">
+                    </form>
+                <%}else{%>
+                    <p>Website is done</p>
+                <%}%>
+            </div>
         <%}%>
         <div class="taskList">
             <%if(tasks.length === 0){%>
@@ -58,7 +67,7 @@
                 <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#F9F9F9"></circle>
                 <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#F0F0F0" stroke-width="5"></circle>
                 <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#e57373" stroke-width="5" stroke-dasharray="<%=pctDone%> <%=100 - pctDone%>" stroke-dashoffset="25"></circle>
-                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ef9a9a" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="125 - <%=pctDone%>"></circle>
+                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ef9a9a" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="<%=125 - pctDone%>"></circle>
                 <g class="chart-text">
                     <text x="50%" y="52%" class="chart-label">
                         <%=Math.round(pctDone)%>% done
@@ -72,6 +81,22 @@
                 </g>
             </svg>
         </div>
+        <%if(session.user == website.author && website.githubRepository){%>
+            <p class="inline">
+                <a class="github" href="<%=website.githubRepository%>"><%=website.githubRepository%></a>
+                <i class="material-icons" style="cursor:pointer;" onclick="opendiv('gh')">edit</i>
+                <form action="/updProject/githubRepository/<%=website._id%>" method="post" id="gh" style="display:none" class="inline">
+                    <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                    <input type="submit" value="Add" class="submit lg">                
+                </form>
+            </p>
+        <%}%>
+        <%if(session.user == website.author && !website.githubRepository){%>
+            <form method="post" action="/updProject/githubRepository/<%=website._id%>" class="inline">
+                <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                <input type="submit" value="Add" class="submit lg">
+            </form>
+        <%}%>
         <h2>Members</h2>
         <div class="members">
             <div class="inline margins">
@@ -80,14 +105,12 @@
                     <%=website.author%>
                 </a>
             </div>
-            <%for(let i = 0; i < jobs.length; i++){%>
+            <%for(let i = 0; i < website.members.length; i++){%>
                 <div class="inline margins">
                     <p>
-                        <%=jobs[i].name%>
+                        <%=website.members[i].job%>
                     </p> | 
-                    <%if(jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)]){%>
-                        <a href="http://localhost:3000/devs/<%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%>"><%=jobs[i].applicants[jobs[i].applicants.map(function(app){return app.chosen}).indexOf(true)].name%></a>
-                    <%}%>
+                    <a href="http://localhost:3000/devs/<%=website.members[i].name%>"><%=website.members[i].name%></a>
                 </div>
             <%}%>
         </div>
@@ -121,7 +144,9 @@
             <%}%>
         </div>
         <input type="hidden" value="<%=JSON.stringify(session)%>" id="session">
-        <input type="text" class="chat-send" placeholder="Chat" onkeyup="message(event)">
+        <%if(!website.done){%>
+            <input type="text" class="chat-send" placeholder="Chat" onkeyup="message(event)">
+        <%}%>
     </div>
 <%}else{%>
     <h1>Sorry, no website here</h1>

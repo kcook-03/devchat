@@ -24,6 +24,7 @@ html, body {
     background-color: whitesmoke;
     background-size: 100%;
     overflow-x: hidden;
+    overflow-y: auto;
 }
 .content {
     padding: 10vh 2vw;
@@ -485,6 +486,7 @@ hr {
     height: 87%;
     width: 27vw;
     background-color: #F9F9F9;
+    overflow-y: auto;
 }
 .projectHeader {
     background-color: #F9F9F9;
@@ -561,5 +563,18 @@ font-size: 2vh;
     margin: 1.5vh 0;
 }
 .chart-text {
-    font-size: 0.8vw;
+    font-size: 1vw;
+}
+.members {
+    width: 27vw;
+    height: 35vh;
+    overflow-y: auto;
+    background-color: whitesmoke;
+}
+.github {
+    color: #2196F3;
+    text-decoration: underline;
+    text-align: center;
+    margin: 0;
+    font-size: 2.5vh;
 }
