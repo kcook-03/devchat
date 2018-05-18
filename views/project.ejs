@@ -6,18 +6,18 @@
         <h1><%=website.name%></h1>
         <h2 style="color:grey"><%=website.author%></h2>
         <hr style="border-color: whitesmoke; border-width:1.5px;">
-        <%if(session.user == website.author){%>
-            <div class="inline">
-                <%if(!website.done){%>
-                    <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
-                    <form action="/finishProject/<%=website._id%>" method="post" style="vertical-align:top">
-                        <input type="submit"value="Finish Project"class=" lg submit" style="margin-right:auto;margin-left:auto">
-                    </form>
-                <%}else{%>
-                    <p>Website is done</p>
-                <%}%>
-            </div>
-        <%}%>
+        <div class="inline">
+            <%if(!website.done && (session.user == website.author)){%>
+                <a href="/addTasks/<%=website._id%>" class="cta lg submit" style="margin-right:auto;margin-left:auto">Add task</a>
+                <form action="/finishProject/<%=website._id%>" method="post" style="vertical-align:top">
+                    <input type="submit"value="Finish Project"class=" lg submit" style="margin-right:auto;margin-left:auto">
+                </form>
+                <i class="material-icons" onmouseover="opendiv('info')" onmouseout="opendiv('info')">info</i>
+                <p id="info" style="display:none !important">Finish a project when all tasks are done and you are ready to pay the members</p>
+            <%}else if(website.done){%>
+                <p>Website is done</p>
+            <%}%>
+        </div>
         <div class="taskList">
             <%if(tasks.length === 0){%>
                 <p style="color:grey">No tasks yet</p>
@@ -43,7 +43,7 @@
             <%}%>
         </div>
     </div>
-    <div class="stats">
+    <div class="stats" style="overflow:hidden;">
         <div class="chart">
             <%var total = tasks.length
             var progress = tasks.filter(function(task){
@@ -86,14 +86,14 @@
                 <a class="github" href="<%=website.githubRepository%>"><%=website.githubRepository%></a>
                 <i class="material-icons" style="cursor:pointer;" onclick="opendiv('gh')">edit</i>
                 <form action="/updProject/githubRepository/<%=website._id%>" method="post" id="gh" style="display:none" class="inline">
-                    <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                    <input type="text" placeholder="GitHub repository" class="titleUpd" name="value">
                     <input type="submit" value="Add" class="submit lg">                
                 </form>
             </p>
         <%}%>
         <%if(session.user == website.author && !website.githubRepository){%>
             <form method="post" action="/updProject/githubRepository/<%=website._id%>" class="inline">
-                <input type="text" placeholder="GitHub repository" class="titleUpd" name="formValue">
+                <input type="text" placeholder="GitHub repository" class="titleUpd" name="value">
                 <input type="submit" value="Add" class="submit lg">
             </form>
         <%}%>

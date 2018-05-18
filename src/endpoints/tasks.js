@@ -1,18 +1,22 @@
 var dbFind = require('../core/dbFind');
 var dbCreate = require('../core/dbCreate');
 var dbUpdate = require('../core/dbUpdate');
-var ObjectID = require('mongodb').ObjectID;
+var dbDelete = require('../core/dbDelete');
 module.exports = {
     renderAdd: async function(req,res){
-        var websiteId = ObjectID(req.params.websiteId);
+        var websiteId = req.params.websiteId;
         var website = await dbFind.find('Website', {'_id':websiteId, 'author':req.session.user});
         res.render('addTask', {session:req.session, website:website})
     },
     add: function(req,res){
-        var websiteId = ObjectID(req.params.websiteId);
+        var websiteId = req.params.websiteId;
         var auth = req.params.author;
         if(req.body.members.constructor != Array){
-            req.body.members = [req.body.members]
+            if(req.body.members && req.body.members !== ''){
+                req.body.members = [req.body.members]
+            }else{
+                req.body.members = null
+            }
         }
         if(auth == req.session.user){
             dbCreate.create('Task', {
@@ -25,16 +29,16 @@ module.exports = {
                 createdAt: Date.now()
             })
         }
-        res.redirect('/projects/' + req.params.websiteId)
+        res.redirect('/projects/' + websiteId)
     },
     show: async function(req,res){
-        var taskId = ObjectID(req.params.taskId);
+        var taskId = req.params.taskId;
         var task = await dbFind.find('Task', {'_id':taskId, $or:[{'members.name':req.session.user}, {'author':req.session.user}]});
         res.render('task', {session:req.session, task:task})
     },
     done: function(req,res){
-        var subTaskId = ObjectID(req.params.subTaskId);
-        var taskId = ObjectID(req.params.taskId);
+        var subTaskId = req.params.subTaskId;
+        var taskId = req.params.taskId;
         dbUpdate.findOneAndUpdate('Task', {
             'subTasks._id':subTaskId, 
             $or:[{'members.name':req.session.user}, {'author':req.session.user}]}, 
@@ -45,6 +49,16 @@ module.exports = {
                     }
                 }
         });
+        res.redirect('/tasks/' + req.params.taskId)
+    },
+    delete: function(req,res){
+        var taskId = req.params.taskId;
+        dbDelete.del('Task', {'_id':taskId, 'author':req.session.user});
+        res.redirect('/projects/' + req.params.websiteId)
+    },
+    addSubTask: function(req,res){
+        var taskId = req.params.taskId;
+        dbUpdate.update('Task', {'_id':taskId, 'author':req.session.user}, {$push:{'subTasks':{'name':req.body.name, 'description':req.body.description}}});
         res.redirect('/tasks/' + req.params.taskId)
     }
 }

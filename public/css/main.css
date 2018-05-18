@@ -90,6 +90,7 @@ a {
     width: 100vw;
     height: 12vh;
     z-index: 1;
+    background-color: whitesmoke;
 }
 .navbar li, .link {
    display: inline;

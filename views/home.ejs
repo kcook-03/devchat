@@ -7,10 +7,12 @@
             <h2><%=websites[i].name%> | <%=websites[i].author%></h2>
             <div class="inline al">
                 <%if(session.dev){%>
-                    <%for(let y = 0; y < websites[i].jobs.length; y++){%>
-                        <div class="bubble">
-                            <%=websites[i].jobs[y]%>
-                        </div>
+                    <%for(let y = 0; y < websites[i].members.length; y++){%>
+                        <%if(websites[i].members[y].name == session.user){%>
+                            <div class="bubble">
+                                <%=websites[i].members[y].job%>
+                            </div>
+                        <%}%>
                     <%}%> 
                 <%}else{%>
                     <div class="bubble">Author</div>
@@ -19,6 +21,10 @@
         </a>
     <%}%>
 <%}else{%>
-<p class="inline">No websites found, <a href="http://localhost:3000/" style="font-size:3vh;text-decoration:underline;color:grey">start some</a>!</p>
+    <%if(session.dev){%>
+        <p class="inline">No websites found, <a href="http://localhost:3000/" style="font-size:3vh;text-decoration:underline;color:grey">join some</a>!</p>
+    <%}else{%>
+        <p class="inline">No websites found, <a href="http://localhost:3000/" style="font-size:3vh;text-decoration:underline;color:grey">start some</a>!</p>
+    <%}%>
 <%}%>
 <% include partials/footer %>

@@ -1,24 +1,24 @@
 var dbFind = require('../core/dbFind');
-var ObjectID = require('mongodb').ObjectID;
 var dbUpdate = require('../core/dbUpdate');
 module.exports = {
     show: async function(req,res){
-        var website = await dbFind.find('Website', {'_id':req.params.websiteId, 'closed':true, $or:[{'author':req.session.user, 'members.name':req.session.user}]});
-        var tasks = await dbFind.search('Task', {'websiteId':req.params.websiteId});
+        var website = await dbFind.find('Website', {'_id':req.params.websiteId, 'closed':true, $or:[{'author':req.session.user}, {'members.name':req.session.user}]});
+        var tasks = await dbFind.search('Task', {'websiteId':req.params.websiteId, $or:[{'author':req.session.user}, {'members.name':req.session.user}]});
         req.session.chatId = req.params.websiteId;
         res.render('project', {session:req.session, website:website, tasks:tasks})
     },
     update: function(req,res){
-        var websiteId = ObjectID(req.params.websiteId);
+        var websiteId = req.params.websiteId;
         var attr = req.params.attr;
-        var formValue = req.body.formValue;
+        var formValue = req.body.value;
+        console.log('updating...')
         if(attr = 'githubRepository'){
-            dbUpdate.findOneAndUpdate('Website', {'_id':websiteId, 'author':req.session.user}, {'githubRepository':formValue})
+            dbUpdate.update('Website', {'_id':websiteId, 'author':req.session.user}, {'githubRepository':formValue})
         }
-        res.redirect('/projects/' + req.params.websiteId)
+        res.redirect('/projects/' + websiteId)
     },
     finish: async function(req,res){
-        var websiteId = ObjectID(req.params.websiteId);
+        var websiteId = req.params.websiteId;
         var tasks = await dbFind.search('Task', {'websiteId':websiteId, 'author':req.session.user});
         if(tasks){
             if(tasks.filter(function(task){return task.done == true}).length == tasks.length){
@@ -32,6 +32,6 @@ module.exports = {
                 })
             }
         }
-        res.redirect('/projects/' + req.params.websiteId)
+        res.redirect('/projects/' + websiteId)
     }
 }
