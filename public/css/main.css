@@ -395,9 +395,9 @@ form * {
     font-size: 10vh;
 }
 .cta {
-    background-color: #F44336;
+    background-color: #2196F3;
     color: white;
-    border-color: #F44336;
+    border-color: #2196F3;
 }
 .logo {
     width: 20vw;
@@ -421,7 +421,7 @@ hr {
 }
 .bubble {
     color: whitesmoke;
-    background-color: #F44336;
+    background-color: #2196F3;
     padding: 1vh 1vw;  
     border-style: hidden;
     border-radius: 5px;

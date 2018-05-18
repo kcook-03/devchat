@@ -29,9 +29,9 @@
                     if(length == 0){
                         color = '#F0F0F0'
                     }else if(length == tasks[i].subTasks.length){
-                        color = '#e57373';
+                        color = '#64B5F6';
                     }else{
-                        color = '#ef9a9a';
+                        color = '#90CAF9';
                     }%>
                     <div class="inline" style="display:block">
                         <a href="/tasks/<%=tasks[i]._id%>"class="task" style="border-left-color:<%=color%>">
@@ -66,8 +66,8 @@
             <svg width="100%" height="100%" viewBox="0 0 42 42" class="donut">
                 <circle class="donut-hole" cx="21" cy="21" r="15.91549430918954" fill="#F9F9F9"></circle>
                 <circle class="donut-ring" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#F0F0F0" stroke-width="5"></circle>
-                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#e57373" stroke-width="5" stroke-dasharray="<%=pctDone%> <%=100 - pctDone%>" stroke-dashoffset="25"></circle>
-                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#ef9a9a" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="<%=125 - pctDone%>"></circle>
+                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#64B5F6" stroke-width="5" stroke-dasharray="<%=pctDone%> <%=100 - pctDone%>" stroke-dashoffset="25"></circle>
+                <circle class="donut-segment" cx="21" cy="21" r="15.91549430918954" fill="transparent" stroke="#90CAF9" stroke-width="5" stroke-dasharray="<%=pctProgress%> <%=100 - pctProgress%>" stroke-dashoffset="<%=125 - pctDone%>"></circle>
                 <g class="chart-text">
                     <text x="50%" y="52%" class="chart-label">
                         <%=Math.round(pctDone)%>% done
