@@ -2,6 +2,9 @@
 <%include partials/center%>
 <%if(task){%>
     <div class="box">
+        <form method="post" action="/taskDelete/<%=task._id%>/<%=task.websiteId%>">
+            <input type="submit" class="submit lg" value="Delete task">
+        </form>
         <h1><%=task.name%></h1>
         <h2 style="color:grey"><%=task.author%></h2>
         <hr>
@@ -23,6 +26,7 @@
                     </div>
                 <%}%>
             </div>
+            <div>
             <div style="width:20vw;height:50vh;overflow-y:auto;">
                 <%for(let i = 0; i < task.members.length; i++){%>
                     <div class="msg-box inline" style="display:block">
@@ -33,6 +37,14 @@
             </div>
         </div>
     </div>
+    <%if(session.user == task.author){%>
+        <button class="lg submit" style="display:block" onclick="opendiv('st')">Add SubTask</button>
+        <form id="st" method="post" action="/addSubTask/<%=task._id%>" style="display:none">
+            <input type="text" class="titleUpd taskName" name="name" placeholder="Task name" name="name">
+            <textarea placeholder="Description" class="textarea titleUpd titleDesc" style="height:20vh;" name="description"></textarea>
+            <input type="submit" class="submit cta" value="Add">
+        </form>
+    <%}%>
 <%}else{%>
     <p>No task found</p>
 <%}%>
